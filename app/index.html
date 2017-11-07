@@ -11,14 +11,91 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="bower_components/html5-boilerplate/dist/css/normalize.css">
   <link rel="stylesheet" href="bower_components/html5-boilerplate/dist/css/main.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.6.1/css/bulma.css">
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
   <link rel="stylesheet" href="app.css">
   <script src="bower_components/html5-boilerplate/dist/js/vendor/modernizr-2.8.3.min.js"></script>
 </head>
 <body>
-  <ul class="menu">
-    <li><a href="#!/view1">view1</a></li>
-    <li><a href="#!/view2">view2</a></li>
-  </ul>
+
+  <!-- NAV -->
+  <nav id="navbar" class="navbar is-fixed-top " style="transform: translateY(0px);">
+    <div id="specialShadow" class="bd-special-shadow" style="opacity: 1; transform: scaleY(1);"></div>
+
+    <div class="container">
+
+    <div class="navbar-brand">
+      <a class="navbar-item" href="/">
+        <span>Report Type Mapper</span>
+      </a>
+
+      <div id="navbarBurger" class="navbar-burger burger" data-target="navMenuDocumentation">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </div>
+
+    <div id="navMenuDocumentation" class="navbar-menu">
+      <div class="navbar-start">
+        <!-- <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link  is-active" href="/documentation/overview/start/">
+            Profile
+          </a>
+          <div class="navbar-dropdown ">
+            <a class="navbar-item " href="/documentation/overview/start/">
+              Settings
+            </a>
+          </div>
+        </div> -->
+        <!-- <a class="navbar-item " href="https://bulma.io/expo/">
+          <span class="bd-emoji">⭐️</span>
+          Expo
+        </a>
+        <a class="navbar-item " href="https://bulma.io/love/">
+          <span class="bd-emoji">❤️</span>
+          Love
+        </a> -->
+      </div>
+
+      <div class="navbar-end">
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link  is-active" href="/documentation/overview/start/">
+            Profile
+          </a>
+          <div class="navbar-dropdown ">
+            <a class="navbar-item " href="/documentation/overview/start/">
+              Settings
+            </a>
+          </div>
+        </div>
+        <div class="navbar-item">
+          <div class="field is-grouped">
+            <p class="control">
+              <a class=" is-link is-outlined button" href="#!/register">
+                <span class="icon">
+                  <i class="fa fa-user-plus"></i>
+                </span>
+                <span>
+                  Register
+                </span>
+              </a>
+            </p>
+            <p class="control">
+              <a class="button is-primary" href="#!/login">
+                <span class="icon">
+                  <i class="fa fa-sign-in"></i>
+                </span>
+                <span>Login</span>
+              </a>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    </div>
+  </nav>
 
   <!--[if lt IE 7]>
       <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
@@ -26,16 +103,19 @@
 
   <div ng-view></div>
 
-  <div>Angular seed app: v<span app-version></span></div>
+  <!-- <div>Angular seed app: v<span app-version></span></div> -->
 
   <!-- In production use:
   <script src="//ajax.googleapis.com/ajax/libs/angularjs/x.x.x/angular.min.js"></script>
   -->
   <script src="bower_components/angular/angular.js"></script>
   <script src="bower_components/angular-route/angular-route.js"></script>
+  <script src="bower_components/ng-lodash/build/ng-lodash.min.js"></script>
+
   <script src="app.js"></script>
-  <script src="view1/view1.js"></script>
-  <script src="view2/view2.js"></script>
+  <script src="views/map/map.js"></script>
+  <script src="views/login/login.js"></script>
+  <script src="views/register/register.js"></script>
   <script src="components/version/version.js"></script>
   <script src="components/version/version-directive.js"></script>
   <script src="components/version/interpolate-filter.js"></script>
