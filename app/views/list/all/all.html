@@ -1,0 +1,31 @@
+<section class="section">
+  <div class="container">
+    <nav class="breadcrumb has-arrow-separator" aria-label="breadcrumbs">
+      <ul>
+        <li><a href="#">{{userProfile.institute.name}}</a></li>
+        <li class="is-active"><a href="/#!/institutes/{{userProfile.institute.id}}/lists">Lists</a></li>
+      </ul>
+    </nav>
+    <table class="table is-bordered is-fullwidth is-narrow is-striped">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th># of Report Types</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="list in lists">
+          <td>{{list.name}}</td>
+          <td>{{list.reportTypesCount}}</td>
+          <td>
+            <a class="button is-small is-info is-outlined" href="/#!/institutes/{{list.institute}}/lists/{{list.id}}/map">Map</a>
+            <a class="button is-small is-info is-outlined" href="/#!/institutes/{{list.institute}}/lists/{{list.id}}/edit">Edit</a>
+            <a class="button is-small is-info is-outlined" href="/#!/institutes/{{list.institute}}/lists/{{list.id}}/delete">Delete</a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <a class="button is-success" href="/#!/institutes/{{userProfile.institute.id}}/lists/create">Create List</a>
+  </div>
+</section>

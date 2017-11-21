@@ -9,7 +9,7 @@
           <div class="panel-block" style="display:block">
             <div class="field">
               <p class="control has-icons-left has-icons-right">
-                <input class="input" type="email" placeholder="Email">
+                <input class="input" type="email" placeholder="Email" ng-model="loginForm.credentials.email">
                 <span class="icon is-small is-left">
                   <i class="fa fa-envelope"></i>
                 </span>
@@ -20,7 +20,7 @@
             </div>
             <div class="field">
               <p class="control has-icons-left">
-                <input class="input" type="password" placeholder="Password">
+                <input class="input" type="password" placeholder="Password" ng-model="loginForm.credentials.password">
                 <span class="icon is-small is-left">
                   <i class="fa fa-lock"></i>
                 </span>
@@ -28,7 +28,7 @@
             </div>
             <div class="field">
               <p class="control">
-                <button class="button is-link is-large is-outlined is-fullwidth">
+                <button class="button is-link is-large is-outlined is-fullwidth" ng-class="loginForm.loading ? 'is-loading' : ''" ng-click="submitLoginForm()">
                   Login
                 </button>
               </p>

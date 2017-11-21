@@ -3,14 +3,49 @@
 angular.module('myApp.map', ['ngRoute', 'ngLodash'])
 
 .config(['$routeProvider', function($routeProvider) {
-  $routeProvider.when('/map', {
+  $routeProvider.when('/institutes/:instituteId/lists/:listId/map', {
     templateUrl: 'views/map/map.html',
-    controller: 'View1Ctrl'
+    controller: 'MapCtrl',
+    resolve: {
+      access: ["Access", function(Access) { return Access.isAuthenticated(); }],
+      userProfile: "UserProfile"
+    }
   });
 }])
 
-.controller('View1Ctrl', ['$scope', 'lodash', '$http', function($scope, lodash, $http) {
-  console.log('in view1 controller...',$scope);
+.controller('MapCtrl', ['$scope', 'lodash', '$http', '$routeParams', 'userProfile', function($scope, lodash, $http, $routeParams, userProfile) {
+
+  $scope.userProfile = userProfile;
+  // getReportTypes();
+  //
+  // $scope.report_types = [];
+  function getReportTypes() {
+
+    // $scope.reportTypes.loading = true;
+
+    $http.get('http://localhost:1337/institutes/'+$routeParams.instituteId+'/lists/'+$routeParams.listId+'/reportTypes')
+    .then(function onSuccess(response) {
+      // $location.path('/');
+      console.log('response: ',response);
+      $scope.report_types = response.data;
+    })
+    .catch(function onError(sailsResponse) {
+      if (sailsResponse.status === 400 || 404) {
+        toastr.error('Invalid email/password combination.', 'Error', {
+          closeButton: true
+        });
+        return;
+      }
+      toastr.error('An unexpected error occurred, please try again', 'Error', {
+        closeButton: true
+      });
+      return;
+    })
+    .finally(function eitherWay() {
+      // $scope.loginForm.loading = false;
+    })
+  }
+
   $scope.report_types = [{
     'id': '1',
     'name': 'X-ray',
@@ -30,6 +65,21 @@ angular.module('myApp.map', ['ngRoute', 'ngLodash'])
       'id': '10',
       'name': 'Healthcare'
     }]
+  }, {
+    'id': '3',
+    'name': 'Acupuncture',
+    'selected': false,
+    'tags': []
+  }, {
+    'id': '4',
+    'name': 'Dermatology',
+    'selected': false,
+    'tags': []
+  }, {
+    'id': '5',
+    'name': 'Surgery',
+    'selected': false,
+    'tags': []
   }];
 
   $scope.tags = [{
@@ -38,6 +88,12 @@ angular.module('myApp.map', ['ngRoute', 'ngLodash'])
   }, {
     'id': '20',
     'name': 'Pharmacy'
+  }, {
+    'id': '30',
+    'name': 'Health'
+  }, {
+    'id': '40',
+    'name': 'More Health'
   }];
 
   $scope.addTag = function(tag) {
@@ -66,36 +122,6 @@ angular.module('myApp.map', ['ngRoute', 'ngLodash'])
         }
       }
     });
-  }
-
-  $scope.callTest1 = function() {
-    $http({
-      method: 'GET',
-      url: 'http://localhost:1337/test1'
-    }).then(function successCallback(response) {
-        // this callback will be called asynchronously
-        // when the response is available
-        console.log("success response: ",response);
-      }, function errorCallback(response) {
-        console.log("error response: ",response);
-        // called asynchronously if an error occurs
-        // or server returns response with an error status.
-      });
-  }
-
-  $scope.callTest2 = function() {
-    $http({
-      method: 'GET',
-      url: 'http://localhost:1337/test2'
-    }).then(function successCallback(response) {
-        // this callback will be called asynchronously
-        // when the response is available
-        console.log("success response: ",response);
-      }, function errorCallback(response) {
-        console.log("error response: ",response);
-        // called asynchronously if an error occurs
-        // or server returns response with an error status.
-      });
   }
 
 

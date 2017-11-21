@@ -3,6 +3,13 @@
 
 <section class="section">
   <div class="container">
+    <nav class="breadcrumb has-arrow-separator" aria-label="breadcrumbs">
+      <ul>
+        <li><a href="#">{{userProfile.institute.name}}</a></li>
+        <li><a href="/#!/institutes/{{userProfile.institute.id}}/lists">Lists</a></li>
+        <li class="is-active"><a href="#" aria-current="page">Map</a></li>
+      </ul>
+    </nav>
     <div class="columns">
       <div class="column">
 
@@ -40,10 +47,10 @@
             </div>
           </div>
 
-          <label class="panel-block">
+          <!-- <label class="panel-block">
             <input type="checkbox">
             remember me
-          </label>
+          </label> -->
           <div class="panel-block">
             <button class="button is-link is-outlined is-fullwidth">
               reset all filters
@@ -78,10 +85,10 @@
             <span>{{tag.name}}</span>
           </div>
 
-          <label class="panel-block">
+          <!-- <label class="panel-block">
             <input type="checkbox">
             remember me
-          </label>
+          </label> -->
           <div class="panel-block">
             <button class="button is-link is-outlined is-fullwidth">
               reset all filters

@@ -13,6 +13,7 @@
   <link rel="stylesheet" href="bower_components/html5-boilerplate/dist/css/main.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.6.1/css/bulma.css">
   <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+  <link href="bower_components/angular-toastr/dist/angular-toastr.min.css" rel="stylesheet">
   <link rel="stylesheet" href="app.css">
   <script src="bower_components/html5-boilerplate/dist/js/vendor/modernizr-2.8.3.min.js"></script>
 </head>
@@ -110,14 +111,34 @@
   -->
   <script src="bower_components/angular/angular.js"></script>
   <script src="bower_components/angular-route/angular-route.js"></script>
+  <script src="bower_components/angular-toastr/dist/angular-toastr.min.js"></script>
+  <script src="bower_components/angular-toastr/dist/angular-toastr.tpls.min.js"></script>
   <script src="bower_components/ng-lodash/build/ng-lodash.min.js"></script>
+  <script src="bower_components/angular-local-storage/dist/angular-local-storage.min.js"></script>
+  <script src="bower_components/angular-bootstrap-file-field/dist/angular-bootstrap-file-field.min.js"></script>
+
 
   <script src="app.js"></script>
-  <script src="views/map/map.js"></script>
-  <script src="views/login/login.js"></script>
-  <script src="views/register/register.js"></script>
+
   <script src="components/version/version.js"></script>
   <script src="components/version/version-directive.js"></script>
   <script src="components/version/interpolate-filter.js"></script>
+
+  <!-- services -->
+  <script src="services/services.js"></script>
+  <script src="services/Access.js"></script>
+  <script src="services/Auth.js"></script>
+  <script src="services/UserProfile.js"></script>
+
+  <!-- views -->
+  <script src="views/map/map.js"></script>
+  <script src="views/login/login.js"></script>
+  <script src="views/register/register.js"></script>
+  <script src="views/list/list.js"></script>
+  <script src="views/list/all/all.js"></script>
+  <script src="views/list/create/create.js"></script>
+  <script src="views/list/delete/delete.js"></script>
+  <script src="views/list/edit/edit.js"></script>
+
 </body>
 </html>
