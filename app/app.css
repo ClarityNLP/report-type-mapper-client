@@ -65,3 +65,9 @@
 body {
   margin-top: 50px;
 }
+
+#report-type-list {
+  height: 300px;
+  overflow-y: scroll;
+  border-bottom: 1px solid #dbdbdb;
+}

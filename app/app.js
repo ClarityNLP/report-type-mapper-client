@@ -6,23 +6,26 @@ angular.module('myApp', [
   'toastr',
   'LocalStorageModule',
   'myApp.map',
+  'myApp.tag',
   'myApp.login',
+  'myApp.logout',
   'myApp.register',
   'myApp.version',
   'myApp.list',
+  'myApp.institutes',
   'myApp.Access',
   'myApp.Auth',
+  'myApp.services',
   'myApp.UserProfile'
 ]).
 config(['$locationProvider', '$routeProvider', '$httpProvider', function($locationProvider, $routeProvider, $httpProvider) {
   $locationProvider.hashPrefix('!');
   $httpProvider.defaults.withCredentials = true;
-  $routeProvider.otherwise({redirectTo: '/map'});
+  $routeProvider.otherwise({redirectTo: '/login'});
 }]).
 run(["$rootScope", "Access", "$location", "$log", function ($rootScope, Access, $location, $log) {
 
   $rootScope.$on("$routeChangeError", function (event, current, previous, rejection) {
-    console.log('rejection: ',rejection);
     switch (rejection) {
 
     case Access.UNAUTHORIZED:

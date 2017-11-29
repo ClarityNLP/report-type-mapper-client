@@ -11,6 +11,6 @@ angular.module('myApp.list.edit', ['ngRoute', 'ngLodash'])
 
 .controller('ListEditCtrl', ['$scope', 'lodash', '$http', '$routeParams', function($scope, lodash, $http, $routeParams) {
 
-  console.log('list edit ctrl...');
+  //TODO
 
 }]);

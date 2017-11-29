@@ -66,41 +66,23 @@
 
 <section class="section">
   <div class="container">
-    <div class="columns is-centered">
-      <div class="column is-half">
-        <nav class="panel">
-          <p class="panel-heading">
-            Login
+    <div class="columns">
+      <div class="column">
+        <h3 class="title is-3">Institutes</h3>
+        <div class="field is-grouped">
+          <p class="control is-expanded">
+            <input class="input" type="text" placeholder="Enter institute name" ng-model="instituteName"/>
           </p>
-          <div class="panel-block" style="display:block">
-            <div class="field">
-              <p class="control has-icons-left has-icons-right">
-                <input class="input" type="email" placeholder="Email" ng-model="loginForm.credentials.email">
-                <span class="icon is-small is-left">
-                  <i class="fa fa-envelope"></i>
-                </span>
-                <span class="icon is-small is-right">
-                  <i class="fa fa-check"></i>
-                </span>
-              </p>
-            </div>
-            <div class="field">
-              <p class="control has-icons-left">
-                <input class="input" type="password" placeholder="Password" ng-model="loginForm.credentials.password">
-                <span class="icon is-small is-left">
-                  <i class="fa fa-lock"></i>
-                </span>
-              </p>
-            </div>
-            <div class="field">
-              <p class="control">
-                <button class="button is-link is-large is-outlined is-fullwidth" ng-class="loginForm.loading ? 'is-loading' : ''" ng-click="submitLoginForm()">
-                  Login
-                </button>
-              </p>
-            </div>
-          </div>
-        </nav>
+          <p class="control">
+            <a class="button is-primary" ng-click="createInstitute()">
+              Create
+            </a>
+          </p>
+        </div>
+        <p class="help is-danger" ng-show="instituteAlreadyExists">The institute already exists.</p>
+      </div>
+      <div class="column">
+
       </div>
     </div>
   </div>

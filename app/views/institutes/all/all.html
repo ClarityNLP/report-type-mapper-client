@@ -66,42 +66,31 @@
 
 <section class="section">
   <div class="container">
-    <div class="columns is-centered">
-      <div class="column is-half">
-        <nav class="panel">
-          <p class="panel-heading">
-            Login
-          </p>
-          <div class="panel-block" style="display:block">
-            <div class="field">
-              <p class="control has-icons-left has-icons-right">
-                <input class="input" type="email" placeholder="Email" ng-model="loginForm.credentials.email">
-                <span class="icon is-small is-left">
-                  <i class="fa fa-envelope"></i>
-                </span>
-                <span class="icon is-small is-right">
-                  <i class="fa fa-check"></i>
-                </span>
-              </p>
-            </div>
-            <div class="field">
-              <p class="control has-icons-left">
-                <input class="input" type="password" placeholder="Password" ng-model="loginForm.credentials.password">
-                <span class="icon is-small is-left">
-                  <i class="fa fa-lock"></i>
-                </span>
-              </p>
-            </div>
-            <div class="field">
-              <p class="control">
-                <button class="button is-link is-large is-outlined is-fullwidth" ng-class="loginForm.loading ? 'is-loading' : ''" ng-click="submitLoginForm()">
-                  Login
-                </button>
-              </p>
-            </div>
-          </div>
-        </nav>
-      </div>
+    <h3 class="title is-3">Institutes</h3>
+    <table class="table is-bordered is-fullwidth is-narrow is-striped" ng-show="institutes.length > 0">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th># of Lists</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="institute in institutes">
+          <td>{{institute.name}}</td>
+          <td>{{institute.lists.length}}</td>
+          <td>
+            <a class="button is-small is-info is-outlined" href="/#!/institutes/{{institute.id}}/lists">View Lists</a>
+            <a class="button is-small is-info is-outlined" href="/#!/institutes/{{institute.id}}/edit">Edit</a>
+            <a class="button is-small is-info is-outlined" href="/#!/institutes/{{institute.id}}/delete">Delete</a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="notification is-warning" ng-show="institutes.length == 0">
+      The are currently now institutes to show. <strong>Try creating an institute below.</strong> The institute will then become available
+      to choose during user registration.
     </div>
+    <a class="button is-success" href="/#!/institutes/create">Create Institute</a>
   </div>
 </section>

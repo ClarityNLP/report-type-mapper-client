@@ -13,94 +13,171 @@ angular.module('myApp.map', ['ngRoute', 'ngLodash'])
   });
 }])
 
-.controller('MapCtrl', ['$scope', 'lodash', '$http', '$routeParams', 'userProfile', function($scope, lodash, $http, $routeParams, userProfile) {
+.controller('MapCtrl', ['$scope', 'lodash', '$http', '$routeParams', 'userProfile', 'Services', function($scope, lodash, $http, $routeParams, userProfile, Services) {
 
   $scope.userProfile = userProfile;
-  // getReportTypes();
-  //
-  // $scope.report_types = [];
+
+  $scope.page = 0;
+
+  $scope.loadMoreActive = false;
+
+  // $scope.loadMoreVisible = false;
+
+  var loadMoreElement = angular.element(document.querySelector('.load-next-page'));
+
+  angular.element(document.querySelector('#report-type-list')).bind('scroll', function(){
+    var loadMore = isScrolledIntoView(loadMoreElement);
+    if (loadMore && $scope.loadMoreActive) {
+      $scope.loadMoreActive = false;
+      $scope.page = $scope.page + 1;
+
+      var params = {
+        instituteId: $routeParams.instituteId,
+        listId: $routeParams.listId,
+        page: $scope.page,
+        query: $scope.query ? $scope.query : ''
+      }
+
+      Services.getReportTypes(params).then(function onSuccess(response) {
+        _.forEach(response.data.reportTypes, function(value) {
+          $scope.report_types.push(value);
+        });
+
+        if (response.data.reportTypes.length == 30) {
+          $scope.loadMoreActive = true;
+        } else {
+          $scope.loadMoreActive = false;
+        }
+      }).catch(function onError(sailsResponse) {
+        console.log('error');
+      }).finally(function eitherWay() {
+        console.log('either way...');
+      });
+      // $http.get('http://localhost:1337/institutes/'+$routeParams.instituteId+'/lists/'+$routeParams.listId+'/reportTypes?page='+$scope.page+'&query='+($scope.query ? $scope.query : ''))
+      // .then(function onSuccess(response) {
+      //   console.log('Response from loading more: ',response);
+      //   // $scope.report_types = response.data;
+      //   _.forEach(response.data, function(value) {
+      //     $scope.report_types.push(value);
+      //   });
+      //
+      //   if (response.data.length == 30) {
+      //     $scope.loadMoreActive = true;
+      //   } else {
+      //     $scope.loadMoreActive = false;
+      //   }
+      // })
+      // .catch(function onError(sailsResponse) {
+      //   if (sailsResponse.status === 400 || 404) {
+      //     toastr.error('Invalid email/password combination.', 'Error', {
+      //       closeButton: true
+      //     });
+      //     return;
+      //   }
+      //   toastr.error('An unexpected error occurred, please try again', 'Error', {
+      //     closeButton: true
+      //   });
+      //   return;
+      // })
+      // .finally(function eitherWay() {
+      //   // $scope.loginForm.loading = false;
+      // })
+    }
+  });
+
+  getReportTypes();
+  getTags();
+
   function getReportTypes() {
 
-    // $scope.reportTypes.loading = true;
+    var params = {
+      instituteId: $routeParams.instituteId,
+      listId: $routeParams.listId,
+      page: $scope.page,
+      query: ''
+    }
 
-    $http.get('http://localhost:1337/institutes/'+$routeParams.instituteId+'/lists/'+$routeParams.listId+'/reportTypes')
-    .then(function onSuccess(response) {
-      // $location.path('/');
-      console.log('response: ',response);
-      $scope.report_types = response.data;
-    })
-    .catch(function onError(sailsResponse) {
-      if (sailsResponse.status === 400 || 404) {
-        toastr.error('Invalid email/password combination.', 'Error', {
-          closeButton: true
-        });
-        return;
+    Services.getReportTypes(params).then(function onSuccess(response) {
+      $scope.numResults = response.data.numResults;
+      $scope.report_types = response.data.reportTypes;
+      if (response.data.reportTypes.length == 30) {
+        $scope.loadMoreActive = true;
+      } else {
+        $scope.loadMoreActive = false;
       }
-      toastr.error('An unexpected error occurred, please try again', 'Error', {
-        closeButton: true
-      });
-      return;
-    })
-    .finally(function eitherWay() {
-      // $scope.loginForm.loading = false;
-    })
+    }).catch(function onError(sailsResponse) {
+      console.log('error');
+    }).finally(function eitherWay() {
+
+    });
   }
 
-  $scope.report_types = [{
-    'id': '1',
-    'name': 'X-ray',
-    'selected': true,
-    'tags': [{
-      'id': '10',
-      'name': 'Healthcare'
-    }, {
-      'id': '20',
-      'name': 'Pharmacy'
-    }]
-  }, {
-    'id': '2',
-    'name': 'Radiology',
-    'selected': false,
-    'tags': [{
-      'id': '10',
-      'name': 'Healthcare'
-    }]
-  }, {
-    'id': '3',
-    'name': 'Acupuncture',
-    'selected': false,
-    'tags': []
-  }, {
-    'id': '4',
-    'name': 'Dermatology',
-    'selected': false,
-    'tags': []
-  }, {
-    'id': '5',
-    'name': 'Surgery',
-    'selected': false,
-    'tags': []
-  }];
+  function getTags() {
+    Services.getTags().then(function onSuccess(response) {
+      $scope.tags = response.data.tags;
+    }).catch(function onError(sailsResponse) {
+      console.log('problem getting tags.');
+    }).finally(function eitherWay() {
 
-  $scope.tags = [{
-    'id': '10',
-    'name': 'Healthcare'
-  }, {
-    'id': '20',
-    'name': 'Pharmacy'
-  }, {
-    'id': '30',
-    'name': 'Health'
-  }, {
-    'id': '40',
-    'name': 'More Health'
-  }];
+    });
+  }
+
+  function isScrolledIntoView(el) {
+      var el = el[0];
+      var elemTop = el.getBoundingClientRect().top;
+      var elemBottom = el.getBoundingClientRect().bottom;
+
+      // Only completely visible elements return true:
+      var isVisible = (elemTop >= 0) && (elemBottom <= window.innerHeight);
+      // Partially visible elements return true:
+      isVisible = elemTop < window.innerHeight && elemBottom >= 0;
+      return isVisible;
+  }
+
+  $scope.search = function(e) {
+    $scope.page = 0;
+
+    var params = {
+      instituteId: $routeParams.instituteId,
+      listId: $routeParams.listId,
+      page: $scope.page,
+      query: $scope.query
+    }
+
+    Services.getReportTypes(params).then(function onSuccess(response) {
+      $scope.numResults = response.data.numResults;
+      $scope.report_types = response.data.reportTypes;
+      if (response.data.reportTypes.length == 30) {
+        $scope.loadMoreActive = true;
+      } else {
+        $scope.loadMoreActive = false;
+      }
+    }).catch(function onError(sailsResponse) {
+      console.log('error');
+    }).finally(function eitherWay() {
+      console.log('either way...');
+    });
+
+  }
 
   $scope.addTag = function(tag) {
     _.forEach($scope.report_types, function(report_type) {
       var hasTag = _.some(report_type.tags, {'id': tag.id});
       if (report_type.selected && !hasTag) {
         report_type.tags.push(tag);
+        var params = {
+          instituteId: $routeParams.instituteId,
+          listId: $routeParams.listId,
+          tagId: tag.id,
+          reportTypeId: report_type.id
+        }
+        Services.addTag(params).then(function onSuccess(response) {
+
+        }).catch(function onError(sailsResponse) {
+          console.log('error');
+        }).finally(function eitherWay() {
+
+        });
       }
     });
   }
@@ -119,6 +196,19 @@ angular.module('myApp.map', ['ngRoute', 'ngLodash'])
         var hasTag = _.some(report_type.tags, {'id': tag_id});
         if (hasTag) {
           _.remove(report_type.tags, {id: tag_id});
+          var params = {
+            instituteId: $routeParams.instituteId,
+            listId: $routeParams.listId,
+            tagId: tag_id,
+            reportTypeId: report_type_id
+          }
+          Services.removeTag(params).then(function onSuccess(response) {
+
+          }).catch(function onError(sailsResponse) {
+            console.log('error');
+          }).finally(function eitherWay() {
+
+          });
         }
       }
     });

@@ -52,10 +52,8 @@ angular.module('myApp.Access', [])
     isAuthenticated: function () {
       return UserProfile.then(function (userProfile) {
         if (userProfile.$isAuthenticated()) {
-          console.log('authed.');
           return Access.OK;
         } else {
-          console.log('not authed.');
           return $q.reject(Access.UNAUTHORIZED);
         }
       });

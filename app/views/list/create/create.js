@@ -19,21 +19,9 @@ angular.module('myApp.list.create', ['ngRoute', 'ngLodash', 'bootstrap.fileField
 
   $scope.createList = function() {
 
-    console.log('name from scope: ',$scope.list.name);
-    console.log('file form scope: ',$scope.list.reportTypes);
-
     var fd = new FormData();
-
-    //you can also send other fields
-    //this will be available as req.body.title
-    //NOTE: files must be added AFTER other form data
     fd.append('name', $scope.list.name);
-
-    //nacho relates to what we called the file
-    //in the api on sails
     fd.append('reportTypes', $scope.list.reportTypes);
-
-    console.log('fd: ',fd);
 
     $http.post("http://localhost:1337/insitutes/"+userProfile.institute.id+"/lists", fd, {
       transformRequest: angular.identity,

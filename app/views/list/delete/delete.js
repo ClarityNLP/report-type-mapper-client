@@ -11,6 +11,6 @@ angular.module('myApp.list.delete', ['ngRoute', 'ngLodash'])
 
 .controller('ListDeleteCtrl', ['$scope', 'lodash', '$http', '$routeParams', function($scope, lodash, $http, $routeParams) {
 
-  console.log('list delete ctrl...');
+  //TODO
 
 }]);

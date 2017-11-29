@@ -6,13 +6,6 @@ angular.module('myApp.list.all', ['ngRoute', 'ngLodash'])
   $routeProvider.when('/institutes/:instituteId/lists', {
     templateUrl: 'views/list/all/all.html',
     controller: 'ListAllCtrl',
-    // resolve: {
-    //   // isAuthed: function() {
-    //   //   if (!localStorageServiceProvider.get('isAuthed')) {
-    //   //     $location.path('/#!/login');
-    //   //   };
-    //   // }
-    // }
     resolve: {
       access: ["Access", function(Access) { return Access.isAuthenticated(); }],
       userProfile: "UserProfile"
@@ -26,9 +19,7 @@ angular.module('myApp.list.all', ['ngRoute', 'ngLodash'])
 
   $http.get('http://localhost:1337/institutes/'+$routeParams.instituteId+'/lists')
   .then(function onSuccess(response) {
-    console.log('lists: ',response);
     $scope.lists = response.data;
-    // $location.path('/');
   })
   .catch(function onError(response) {
     toastr.error('An unexpected error occurred, please try again', 'Error', {
@@ -37,7 +28,7 @@ angular.module('myApp.list.all', ['ngRoute', 'ngLodash'])
     return;
   })
   .finally(function eitherWay() {
-    // $scope.loginForm.loading = false;
+
   })
 
 }]);

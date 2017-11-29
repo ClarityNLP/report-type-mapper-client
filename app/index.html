@@ -19,96 +19,8 @@
 </head>
 <body>
 
-  <!-- NAV -->
-  <nav id="navbar" class="navbar is-fixed-top " style="transform: translateY(0px);">
-    <div id="specialShadow" class="bd-special-shadow" style="opacity: 1; transform: scaleY(1);"></div>
-
-    <div class="container">
-
-    <div class="navbar-brand">
-      <a class="navbar-item" href="/">
-        <span>Report Type Mapper</span>
-      </a>
-
-      <div id="navbarBurger" class="navbar-burger burger" data-target="navMenuDocumentation">
-        <span></span>
-        <span></span>
-        <span></span>
-      </div>
-    </div>
-
-    <div id="navMenuDocumentation" class="navbar-menu">
-      <div class="navbar-start">
-        <!-- <div class="navbar-item has-dropdown is-hoverable">
-          <a class="navbar-link  is-active" href="/documentation/overview/start/">
-            Profile
-          </a>
-          <div class="navbar-dropdown ">
-            <a class="navbar-item " href="/documentation/overview/start/">
-              Settings
-            </a>
-          </div>
-        </div> -->
-        <!-- <a class="navbar-item " href="https://bulma.io/expo/">
-          <span class="bd-emoji">⭐️</span>
-          Expo
-        </a>
-        <a class="navbar-item " href="https://bulma.io/love/">
-          <span class="bd-emoji">❤️</span>
-          Love
-        </a> -->
-      </div>
-
-      <div class="navbar-end">
-        <div class="navbar-item has-dropdown is-hoverable">
-          <a class="navbar-link  is-active" href="/documentation/overview/start/">
-            Profile
-          </a>
-          <div class="navbar-dropdown ">
-            <a class="navbar-item " href="/documentation/overview/start/">
-              Settings
-            </a>
-          </div>
-        </div>
-        <div class="navbar-item">
-          <div class="field is-grouped">
-            <p class="control">
-              <a class=" is-link is-outlined button" href="#!/register">
-                <span class="icon">
-                  <i class="fa fa-user-plus"></i>
-                </span>
-                <span>
-                  Register
-                </span>
-              </a>
-            </p>
-            <p class="control">
-              <a class="button is-primary" href="#!/login">
-                <span class="icon">
-                  <i class="fa fa-sign-in"></i>
-                </span>
-                <span>Login</span>
-              </a>
-            </p>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    </div>
-  </nav>
-
-  <!--[if lt IE 7]>
-      <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
-  <![endif]-->
-
   <div ng-view></div>
 
-  <!-- <div>Angular seed app: v<span app-version></span></div> -->
-
-  <!-- In production use:
-  <script src="//ajax.googleapis.com/ajax/libs/angularjs/x.x.x/angular.min.js"></script>
-  -->
   <script src="bower_components/angular/angular.js"></script>
   <script src="bower_components/angular-route/angular-route.js"></script>
   <script src="bower_components/angular-toastr/dist/angular-toastr.min.js"></script>
@@ -132,13 +44,20 @@
 
   <!-- views -->
   <script src="views/map/map.js"></script>
+  <script src="views/tag/tag.js"></script>
   <script src="views/login/login.js"></script>
   <script src="views/register/register.js"></script>
+  <script src="views/logout/logout.js"></script>
   <script src="views/list/list.js"></script>
   <script src="views/list/all/all.js"></script>
   <script src="views/list/create/create.js"></script>
   <script src="views/list/delete/delete.js"></script>
   <script src="views/list/edit/edit.js"></script>
+  <script src="views/institutes/institute.js"></script>
+  <script src="views/institutes/all/all.js"></script>
+  <script src="views/institutes/create/create.js"></script>
+  <script src="views/institutes/delete/delete.js"></script>
+  <script src="views/institutes/edit/edit.js"></script>
 
 </body>
 </html>

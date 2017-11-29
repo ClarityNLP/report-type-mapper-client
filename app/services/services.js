@@ -1,8 +1,57 @@
-// 'use strict';
-//
-// // Declare app level module which depends on views, and components
-// angular.module('myApp.services', [
-//   'myApp.services.Access.js',
-//   'myApp.services.Auth.js',
-//   'myApp.services.UserProfile.js'
-// ])
+angular.module('myApp.services', [])
+
+.service("Services", ["$http", function ($http) {
+
+  this.getReportTypes = function(params) {
+    return $http.get('http://localhost:1337/institutes/'+params.instituteId+'/lists/'+params.listId+'/reportTypes?page='+params.page+'&query='+params.query)
+  }
+
+  this.addTag = function(params) {
+    var payload = {
+      reportTypeId: params.reportTypeId,
+      tagId: params.tagId
+    };
+    return $http.post('http://localhost:1337/institutes/'+params.instituteId+'/lists/'+params.listId+'/addTag', payload)
+  }
+
+  this.removeTag = function(params) {
+    var payload = {
+      reportTypeId: params.reportTypeId,
+      tagId: params.tagId
+    };
+    return $http.post('http://localhost:1337/institutes/'+params.instituteId+'/lists/'+params.listId+'/removeTag', payload)
+  }
+
+  this.createTag = function(name) {
+    return $http.post('http://localhost:1337/tags', { name: name });
+  }
+
+  this.getTagCount = function() {
+    return $http.get('http://localhost:1337/tags/count')
+  }
+
+  this.getTags = function() {
+    return $http.get('http://localhost:1337/tags')
+  }
+
+  this.getInstitutes = function() {
+    return $http.get('http://localhost:1337/institutes')
+  }
+
+  this.createInstitute = function(name) {
+    return $http.post('http://localhost:1337/institutes', { name: name });
+  }
+
+  this.getInstitute = function(instituteId) {
+    return $http.get('http://localhost:1337/institutes/'+instituteId);
+  }
+
+  this.editInstitute = function(params) {
+    return $http.post('http://localhost:1337/institutes/'+params.instituteId, { name: params.name });
+  }
+
+  this.deleteInstitute = function(instituteId) {
+    return $http.delete('http://localhost:1337/institutes/'+instituteId);
+  }
+
+}])

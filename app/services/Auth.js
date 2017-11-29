@@ -12,7 +12,11 @@ angular.module('myApp.Auth', [])
     });
   };
 
-  this.signOut = function() {
+  this.signUp = function(params) {
+    return $http.post("http://localhost:1337/signup", params);
+  }
+
+  this.logout = function() {
     return $http.get("http://localhost:1337/logout");
   };
 
