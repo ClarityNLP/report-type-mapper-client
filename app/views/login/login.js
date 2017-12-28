@@ -24,7 +24,11 @@ angular.module('myApp.login', ['ngRoute', 'ngLodash'])
     Auth.signIn($scope.loginForm.credentials).then(function() {
       return userProfile.$refresh();
     }).then(function() {
-      $location.path('/institutes/'+userProfile.institute.id+'/lists');
+      if (userProfile.$hasRole('ROLE_ADMIN')) {
+        $location.path('/institutes');
+      } else {
+        $location.path('/institutes/'+userProfile.institute.id+'/lists');
+      }
     });
   }
 

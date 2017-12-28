@@ -19,6 +19,20 @@ angular.module('myApp.tag', ['ngRoute', 'ngLodash'])
 
   $scope.tagAlreadyExists = false;
 
+  $scope.createTags = function() {
+    var fd = new FormData();
+    fd.append('tagFile', $scope.tagFile);
+
+    $http.post("http://localhost:1337/uploadLoincDocumentOntologyCSV", fd, {
+      transformRequest: angular.identity,
+      headers: {'Content-Type': undefined}
+    }).then(function(response) {
+      console.log('upload success...');
+      console.log('response: ',response);
+      // $location.path('/institutes/'+userProfile.institute.id+'/lists');
+    })
+  }
+
   $scope.createTag = function() {
     Services.createTag($scope.tagName).then(function onSuccess(response) {
       $scope.numTags = $scope.numTags + 1;

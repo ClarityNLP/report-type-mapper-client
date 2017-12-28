@@ -3,7 +3,11 @@ angular.module('myApp.services', [])
 .service("Services", ["$http", function ($http) {
 
   this.getReportTypes = function(params) {
-    return $http.get('http://localhost:1337/institutes/'+params.instituteId+'/lists/'+params.listId+'/reportTypes?page='+params.page+'&query='+params.query)
+    return $http.get('http://localhost:1337/institutes/'+params.instituteId+'/lists/'+params.listId+'/reportTypes?page='+params.reportTypePage+'&query='+params.reportTypeQuery)
+  }
+
+  this.getTags = function(params) {
+    return $http.get('http://localhost:1337/institutes/'+params.instituteId+'/lists/'+params.listId+'/tags?query='+params.tagQuery)
   }
 
   this.addTag = function(params) {
@@ -30,10 +34,6 @@ angular.module('myApp.services', [])
     return $http.get('http://localhost:1337/tags/count')
   }
 
-  this.getTags = function() {
-    return $http.get('http://localhost:1337/tags')
-  }
-
   this.getInstitutes = function() {
     return $http.get('http://localhost:1337/institutes')
   }
@@ -52,6 +52,10 @@ angular.module('myApp.services', [])
 
   this.deleteInstitute = function(instituteId) {
     return $http.delete('http://localhost:1337/institutes/'+instituteId);
+  }
+
+  this.getInstituteName = function(instituteId) {
+    return $http.get('http://localhost:1337/institutes/'+instituteId+'/name');
   }
 
 }])

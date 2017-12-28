@@ -13,9 +13,23 @@ angular.module('myApp.list.create', ['ngRoute', 'ngLodash', 'bootstrap.fileField
   });
 }])
 
-.controller('ListCreateCtrl', ['$scope', 'lodash', '$http', '$location', '$routeParams', 'userProfile', function($scope, lodash, $http, $location, $routeParams, userProfile) {
+.controller('ListCreateCtrl', ['$scope', 'lodash', '$http', '$location', '$routeParams', 'userProfile', 'Services', function($scope, lodash, $http, $location, $routeParams, userProfile, Services) {
 
   $scope.userProfile = userProfile;
+
+  $scope.instituteId = $routeParams.instituteId;
+
+  getInstituteName();
+
+  function getInstituteName() {
+    Services.getInstituteName($routeParams.instituteId).then(function onSuccess(response) {
+      $scope.instituteName = response.data
+      console.log('response: ',response);
+    }).catch(function onError(sailsResponse) {
+      console.log('problem getting institute name.');
+    }).finally(function eitherWay() {
+    });
+  }
 
   $scope.createList = function() {
 
@@ -23,12 +37,12 @@ angular.module('myApp.list.create', ['ngRoute', 'ngLodash', 'bootstrap.fileField
     fd.append('name', $scope.list.name);
     fd.append('reportTypes', $scope.list.reportTypes);
 
-    $http.post("http://localhost:1337/insitutes/"+userProfile.institute.id+"/lists", fd, {
+    $http.post("http://localhost:1337/institutes/"+$routeParams.instituteId+"/lists", fd, {
       transformRequest: angular.identity,
       headers: {'Content-Type': undefined}
     }).then(function(response) {
       console.log('response: ',response);
-      $location.path('/institutes/'+userProfile.institute.id+'/lists');
+      $location.path('/institutes/'+$routeParams.instituteId+'/lists');
     })
   }
 

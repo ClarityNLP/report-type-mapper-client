@@ -68,8 +68,8 @@
   <div class="container">
     <nav class="breadcrumb has-arrow-separator" aria-label="breadcrumbs">
       <ul>
-        <li><a href="#">{{userProfile.institute.name}}</a></li>
-        <li><a href="/#!/institutes/{{userProfile.institute.id}}/lists">Lists</a></li>
+        <li><a href="#">{{instituteName}}</a></li>
+        <li><a href="/#!/institutes/{{instituteId}}/lists">Lists</a></li>
         <li class="is-active"><a href="#" aria-current="page">Map</a></li>
       </ul>
     </nav>
@@ -78,11 +78,11 @@
 
         <nav id="" class="panel">
           <p class="panel-heading">
-            Report Types <span class="tag is-light">{{numResults}}&nbsp;results</span>
+            Report Types <span class="tag is-light">{{numReportTypeResults}}&nbsp;results</span>
           </p>
           <div class="panel-block">
             <p class="control has-icons-left">
-              <input class="input is-small" type="text" placeholder="search" ng-model="query" ng-keyup="search($event)">
+              <input class="input is-small" type="text" placeholder="search" ng-model="reportTypeQuery" ng-keyup="searchReportType($event)">
               <span class="icon is-small is-left">
                 <i class="fa fa-search"></i>
               </span>
@@ -104,7 +104,7 @@
               <div class="field is-grouped is-grouped-multiline tag-list">
                 <div class="control" data-id="{{tag.id}}" ng-repeat="tag in report_type.tags">
                   <div class="tags has-addons">
-                    <span class="tag">{{tag.name}}</span>
+                    <span class="tag">{{tag.documentSubjectMatterDomain}}</span>
                     <span class="tag is-danger cross" ng-click="deleteTag(report_type.id,tag.id)"><i class="fa fa-times"></i></span>
                   </div>
                 </div>
@@ -131,11 +131,11 @@
 
         <nav id="tags" class="panel">
           <p class="panel-heading">
-            Tags
+            Tags <span class="tag is-light">{{numTagResults}}&nbsp;results</span>
           </p>
           <div class="panel-block">
             <p class="control has-icons-left">
-              <input class="input is-small" type="text" placeholder="search">
+              <input class="input is-small" type="text" placeholder="search tags" ng-model="tagQuery" ng-keyup="searchTag($event)">
               <span class="icon is-small is-left">
                 <i class="fa fa-search"></i>
               </span>
@@ -150,7 +150,7 @@
           </p> -->
           <div class="panel-block" data-id="{{tag.id}}" ng-repeat="tag in tags">
             <a class="button is-info is-outlined is-small" ng-click="addTag(tag)">Add Tag</a>&nbsp;&nbsp;
-            <span>{{tag.name}}</span>
+            <span>{{tag.documentSubjectMatterDomain}}</span>
           </div>
 
           <!-- <label class="panel-block">

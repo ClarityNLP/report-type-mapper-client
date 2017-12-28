@@ -17,7 +17,7 @@ angular.module('myApp.map', ['ngRoute', 'ngLodash'])
 
   $scope.userProfile = userProfile;
 
-  $scope.page = 0;
+  $scope.reportTypePage = 0;
 
   $scope.loadMoreActive = false;
 
@@ -53,35 +53,6 @@ angular.module('myApp.map', ['ngRoute', 'ngLodash'])
       }).finally(function eitherWay() {
         console.log('either way...');
       });
-      // $http.get('http://localhost:1337/institutes/'+$routeParams.instituteId+'/lists/'+$routeParams.listId+'/reportTypes?page='+$scope.page+'&query='+($scope.query ? $scope.query : ''))
-      // .then(function onSuccess(response) {
-      //   console.log('Response from loading more: ',response);
-      //   // $scope.report_types = response.data;
-      //   _.forEach(response.data, function(value) {
-      //     $scope.report_types.push(value);
-      //   });
-      //
-      //   if (response.data.length == 30) {
-      //     $scope.loadMoreActive = true;
-      //   } else {
-      //     $scope.loadMoreActive = false;
-      //   }
-      // })
-      // .catch(function onError(sailsResponse) {
-      //   if (sailsResponse.status === 400 || 404) {
-      //     toastr.error('Invalid email/password combination.', 'Error', {
-      //       closeButton: true
-      //     });
-      //     return;
-      //   }
-      //   toastr.error('An unexpected error occurred, please try again', 'Error', {
-      //     closeButton: true
-      //   });
-      //   return;
-      // })
-      // .finally(function eitherWay() {
-      //   // $scope.loginForm.loading = false;
-      // })
     }
   });
 
@@ -93,12 +64,13 @@ angular.module('myApp.map', ['ngRoute', 'ngLodash'])
     var params = {
       instituteId: $routeParams.instituteId,
       listId: $routeParams.listId,
-      page: $scope.page,
-      query: ''
+      reportTypePage: $scope.reportTypePage,
+      reportTypeQuery: ''
     }
 
     Services.getReportTypes(params).then(function onSuccess(response) {
-      $scope.numResults = response.data.numResults;
+      $scope.numReportTypeResults = response.data.numResults;
+      console.log('response: ',response);
       $scope.report_types = response.data.reportTypes;
       if (response.data.reportTypes.length == 30) {
         $scope.loadMoreActive = true;
@@ -113,7 +85,16 @@ angular.module('myApp.map', ['ngRoute', 'ngLodash'])
   }
 
   function getTags() {
-    Services.getTags().then(function onSuccess(response) {
+
+    var params = {
+      instituteId: $routeParams.instituteId,
+      listId: $routeParams.listId,
+      // tagPage: $scope.tagPage,
+      tagQuery: ''
+    }
+
+    Services.getTags(params).then(function onSuccess(response) {
+      $scope.numTagResults = response.data.numResults;
       $scope.tags = response.data.tags;
     }).catch(function onError(sailsResponse) {
       console.log('problem getting tags.');
@@ -134,24 +115,46 @@ angular.module('myApp.map', ['ngRoute', 'ngLodash'])
       return isVisible;
   }
 
-  $scope.search = function(e) {
-    $scope.page = 0;
+  $scope.searchReportType = function(e) {
+    $scope.reportTypePage = 0;
 
     var params = {
       instituteId: $routeParams.instituteId,
       listId: $routeParams.listId,
-      page: $scope.page,
-      query: $scope.query
+      reportTypePage: $scope.reportTypePage,
+      reportTypeQuery: $scope.reportTypeQuery
     }
 
     Services.getReportTypes(params).then(function onSuccess(response) {
-      $scope.numResults = response.data.numResults;
+      $scope.numReportTypeResults = response.data.numResults;
       $scope.report_types = response.data.reportTypes;
       if (response.data.reportTypes.length == 30) {
         $scope.loadMoreActive = true;
       } else {
         $scope.loadMoreActive = false;
       }
+    }).catch(function onError(sailsResponse) {
+      console.log('error');
+    }).finally(function eitherWay() {
+      console.log('either way...');
+    });
+
+  }
+
+  $scope.searchTag = function(e) {
+    // $scope.reportTypePage = 0;
+    console.log('search tag...');
+
+    var params = {
+      instituteId: $routeParams.instituteId,
+      listId: $routeParams.listId,
+      // reportTypePage: $scope.reportTypePage,
+      tagQuery: $scope.tagQuery
+    }
+
+    Services.getTags(params).then(function onSuccess(response) {
+      $scope.numTagResults = response.data.numResults;
+      $scope.tags = response.data.tags;
     }).catch(function onError(sailsResponse) {
       console.log('error');
     }).finally(function eitherWay() {
@@ -211,6 +214,19 @@ angular.module('myApp.map', ['ngRoute', 'ngLodash'])
           });
         }
       }
+    });
+  }
+
+  $scope.instituteId = $routeParams.instituteId;
+
+  getInstituteName();
+
+  function getInstituteName() {
+    Services.getInstituteName($routeParams.instituteId).then(function onSuccess(response) {
+      $scope.instituteName = response.data
+    }).catch(function onError(sailsResponse) {
+      console.log('problem getting institute name.');
+    }).finally(function eitherWay() {
     });
   }
 

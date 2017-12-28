@@ -68,8 +68,8 @@
   <div class="container">
     <div class="columns">
       <div class="column">
-        <h3 class="title is-3">Tags <span class="tag is-light">Total: {{numTags}}</span></h3>
-        <div class="field is-grouped">
+        <h3 class="title is-3">Add Tags <span class="tag is-light">Total: {{numTags}}</span></h3>
+        <!-- <div class="field is-grouped">
           <p class="control is-expanded">
             <input class="input" type="text" placeholder="Add a tag" ng-model="tagName"/>
           </p>
@@ -79,7 +79,41 @@
             </a>
           </p>
         </div>
-        <p class="help is-danger" ng-show="tagAlreadyExists">The tag already exists.</p>
+        <p class="help is-danger" ng-show="tagAlreadyExists">The tag already exists.</p> -->
+
+        <form ng-submit="createTags()">
+          <div class="field">
+            <label class="label">Upload LOINC Ontology Document</label>
+            <!-- <div class="control">
+              <div class="file has-name">
+                <label class="file-label">
+                  <input class="file-input" type="file" fileread="list.reportTypes">
+                  <span class="file-cta">
+                    <span class="file-icon">
+                      <i class="fa fa-upload"></i>
+                    </span>
+                    <span class="file-label">
+                      Choose a file…
+                    </span>
+                  </span>
+                </label>
+              </div>
+            </div> -->
+            <!-- <p class="help">Select a csv file to upload report types</p> -->
+            <!-- <div class="control"> -->
+              <file-field class="button" ng-model="tagFile">Select file</file-field>
+            <!-- </div> -->
+          </div>
+
+
+          <div class="field">
+            <div class="control">
+              <input type="submit" class="button is-link">
+            </div>
+          </div>
+
+        </form>
+
       </div>
       <div class="column">
 

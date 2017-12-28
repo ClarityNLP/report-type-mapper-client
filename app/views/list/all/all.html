@@ -68,8 +68,8 @@
   <div class="container">
     <nav class="breadcrumb has-arrow-separator" aria-label="breadcrumbs">
       <ul>
-        <li><a href="#">{{userProfile.institute.name}}</a></li>
-        <li class="is-active"><a href="/#!/institutes/{{userProfile.institute.id}}/lists">Lists</a></li>
+        <li><a>{{instituteName}}</a></li>
+        <li class="is-active"><a href="/#!/institutes/{{instituteId}}/lists">Lists</a></li>
       </ul>
     </nav>
     <table class="table is-bordered is-fullwidth is-narrow is-striped" ng-show="lists.length > 0">
@@ -92,6 +92,9 @@
         </tr>
       </tbody>
     </table>
-    <a class="button is-success" href="/#!/institutes/{{userProfile.institute.id}}/lists/create">Create List</a>
+    <div class="notification is-warning" ng-show="lists.length == 0">
+      The are currently no lists to show. <strong>Try creating a list below.</strong>
+    </div>
+    <a class="button is-success" href="/#!/institutes/{{instituteId}}/lists/create">Create List</a>
   </div>
 </section>

@@ -13,9 +13,23 @@ angular.module('myApp.list.all', ['ngRoute', 'ngLodash'])
   });
 }])
 
-.controller('ListAllCtrl', ['$scope', 'lodash', '$http', '$routeParams', 'userProfile', function($scope, lodash, $http, $routeParams, userProfile) {
+.controller('ListAllCtrl', ['$scope', 'lodash', '$http', '$routeParams', 'userProfile', 'Services', function($scope, lodash, $http, $routeParams, userProfile, Services) {
 
   $scope.userProfile = userProfile;
+
+  $scope.instituteId = $routeParams.instituteId;
+
+  getInstituteName();
+
+  function getInstituteName() {
+    Services.getInstituteName($routeParams.instituteId).then(function onSuccess(response) {
+      $scope.instituteName = response.data
+      console.log('response: ',response);
+    }).catch(function onError(sailsResponse) {
+      console.log('problem getting institute name.');
+    }).finally(function eitherWay() {
+    });
+  }
 
   $http.get('http://localhost:1337/institutes/'+$routeParams.instituteId+'/lists')
   .then(function onSuccess(response) {
