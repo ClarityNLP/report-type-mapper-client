@@ -21,7 +21,8 @@ angular.module('myApp', [
   'myApp.UserProfile'
 ]).
 constant('config', {
-  API_URL: 'http://104.131.34.144:1337'
+  API_URL: 'http://report-type-mapper.hdap.gatech.edu:1337'
+  // API_URL: 'http://104.131.34.144:1337'
   // API_URL: 'http://localhost:1337'
 }).
 config(['$locationProvider', '$routeProvider', '$httpProvider', function($locationProvider, $routeProvider, $httpProvider) {
