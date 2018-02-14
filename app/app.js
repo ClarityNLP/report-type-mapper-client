@@ -7,17 +7,23 @@ angular.module('myApp', [
   'LocalStorageModule',
   'myApp.map',
   'myApp.tag',
+  'myApp.token',
   'myApp.login',
   'myApp.logout',
   'myApp.register',
   'myApp.version',
   'myApp.list',
+  'myApp.pending',
   'myApp.institutes',
   'myApp.Access',
   'myApp.Auth',
   'myApp.services',
   'myApp.UserProfile'
 ]).
+constant('config', {
+  API_URL: 'http://104.131.34.144:1337'
+  // API_URL: 'http://localhost:1337'
+}).
 config(['$locationProvider', '$routeProvider', '$httpProvider', function($locationProvider, $routeProvider, $httpProvider) {
   $locationProvider.hashPrefix('!');
   $httpProvider.defaults.withCredentials = true;
@@ -34,6 +40,10 @@ run(["$rootScope", "Access", "$location", "$log", function ($rootScope, Access, 
 
     case Access.FORBIDDEN:
       $location.path("/forbidden");
+      break;
+
+    case Access.PENDING_ADMIN_APPROVAL:
+      $location.path("/pending");
       break;
 
     default:

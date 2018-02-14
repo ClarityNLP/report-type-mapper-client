@@ -13,17 +13,20 @@ angular.module('myApp.tag', ['ngRoute', 'ngLodash'])
   });
 }])
 
-.controller('TagCtrl', ['$scope', 'lodash', '$http', '$routeParams', 'userProfile', 'Services', function($scope, lodash, $http, $routeParams, userProfile, Services) {
+.controller('TagCtrl', ['$scope', 'lodash', '$http', '$routeParams', 'userProfile', 'Services', 'config', function($scope, lodash, $http, $routeParams, userProfile, Services, config) {
 
   $scope.userProfile = userProfile;
 
   $scope.tagAlreadyExists = false;
 
+  $scope.fileFormat = 'simple';
+
   $scope.createTags = function() {
     var fd = new FormData();
     fd.append('tagFile', $scope.tagFile);
+    fd.append('fileFormat', $scope.fileFormat);
 
-    $http.post("http://localhost:1337/uploadLoincDocumentOntologyCSV", fd, {
+    $http.post(config.API_URL+"/uploadLoincDocumentOntologyCSV", fd, {
       transformRequest: angular.identity,
       headers: {'Content-Type': undefined}
     }).then(function(response) {

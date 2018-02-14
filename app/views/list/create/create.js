@@ -13,7 +13,7 @@ angular.module('myApp.list.create', ['ngRoute', 'ngLodash', 'bootstrap.fileField
   });
 }])
 
-.controller('ListCreateCtrl', ['$scope', 'lodash', '$http', '$location', '$routeParams', 'userProfile', 'Services', function($scope, lodash, $http, $location, $routeParams, userProfile, Services) {
+.controller('ListCreateCtrl', ['$scope', 'lodash', '$http', '$location', '$routeParams', 'userProfile', 'Services', 'config', function($scope, lodash, $http, $location, $routeParams, userProfile, Services, config) {
 
   $scope.userProfile = userProfile;
 
@@ -37,7 +37,7 @@ angular.module('myApp.list.create', ['ngRoute', 'ngLodash', 'bootstrap.fileField
     fd.append('name', $scope.list.name);
     fd.append('reportTypes', $scope.list.reportTypes);
 
-    $http.post("http://localhost:1337/institutes/"+$routeParams.instituteId+"/lists", fd, {
+    $http.post(config.API_URL+"/institutes/"+$routeParams.instituteId+"/lists", fd, {
       transformRequest: angular.identity,
       headers: {'Content-Type': undefined}
     }).then(function(response) {

@@ -25,11 +25,11 @@
           Tags
         </a>
         <div class="navbar-item has-dropdown is-hoverable" ng-show="userProfile.$isAuthenticated()">
-          <a class="navbar-link" href="/documentation/overview/start/">
+          <a class="navbar-link" href="/#!/token">
             Settings
           </a>
           <div class="navbar-dropdown ">
-            <a class="navbar-item " href="/documentation/overview/start/">
+            <a class="navbar-item " href="/#!/token">
               API Token
             </a>
             <a class="navbar-item " href="/#!/logout">
@@ -86,8 +86,9 @@
             <div class="field">
               <div class="control">
                 <div class="select" style="display:block;">
-                  <select style="width:100%;" ng-model="registerForm.instituteId">
-                    <option ng-repeat="institute in institutes" value="{{institute.id}}">{{institute.name}}</option>
+                  <select style="width:100%;" ng-model="registerForm.selectedInstitute" ng-options="institute.name for institute in institutes track by institute.id">
+                    <!-- <option ng-repeat="institute in institutes" ng-value="{{institute.id}}">{{institute.name}}</option> -->
+
                   </select>
                 </div>
               </div>
@@ -117,6 +118,9 @@
                   Register
                 </button>
               </p>
+            </div>
+            <div class="notification is-danger" ng-show="registerForm.errors">
+              {{registerForm.errors}}
             </div>
           </div>
         </nav>

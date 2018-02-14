@@ -35,6 +35,10 @@ angular.module('myApp.UserProfile', [])
 
         $isAuthenticated: function () {
           return userProfile.userId;
+        },
+
+        $isPending: function () {
+          return userProfile.roles.indexOf('ROLE_PENDING_USER') >= 0;
         }
 
       });

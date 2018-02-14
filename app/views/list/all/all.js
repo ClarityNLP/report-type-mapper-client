@@ -13,7 +13,7 @@ angular.module('myApp.list.all', ['ngRoute', 'ngLodash'])
   });
 }])
 
-.controller('ListAllCtrl', ['$scope', 'lodash', '$http', '$routeParams', 'userProfile', 'Services', function($scope, lodash, $http, $routeParams, userProfile, Services) {
+.controller('ListAllCtrl', ['$scope', 'lodash', '$http', '$routeParams', 'userProfile', 'Services', 'config', function($scope, lodash, $http, $routeParams, userProfile, Services, config) {
 
   $scope.userProfile = userProfile;
 
@@ -31,7 +31,7 @@ angular.module('myApp.list.all', ['ngRoute', 'ngLodash'])
     });
   }
 
-  $http.get('http://localhost:1337/institutes/'+$routeParams.instituteId+'/lists')
+  $http.get(config.API_URL+'/institutes/'+$routeParams.instituteId+'/lists')
   .then(function onSuccess(response) {
     $scope.lists = response.data;
   })

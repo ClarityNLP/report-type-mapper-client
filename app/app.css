@@ -67,7 +67,13 @@ body {
 }
 
 #report-type-list {
-  height: 300px;
+  height: 350px;
+  overflow-y: scroll;
+  border-bottom: 1px solid #dbdbdb;
+}
+
+#tag-list {
+  height: 350px;
   overflow-y: scroll;
   border-bottom: 1px solid #dbdbdb;
 }

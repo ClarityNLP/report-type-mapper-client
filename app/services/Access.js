@@ -51,8 +51,10 @@ angular.module('myApp.Access', [])
 
     isAuthenticated: function () {
       return UserProfile.then(function (userProfile) {
-        if (userProfile.$isAuthenticated()) {
+        if (userProfile.$isAuthenticated() && !userProfile.$isPending()) {
           return Access.OK;
+        } else if (userProfile.$isPending()) {
+          return $q.reject(Access.PENDING_ADMIN_APPROVAL);
         } else {
           return $q.reject(Access.UNAUTHORIZED);
         }

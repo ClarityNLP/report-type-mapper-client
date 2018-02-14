@@ -12,7 +12,7 @@ angular.module('myApp.login', ['ngRoute', 'ngLodash'])
   });
 }])
 
-.controller('LoginCtrl', ['$scope', 'lodash', '$http', 'toastr', '$location', 'userProfile', 'Auth', function($scope, lodash, $http, toastr, $location, userProfile, Auth) {
+.controller('LoginCtrl', ['$scope', 'lodash', 'toastr', '$location', 'userProfile', 'Auth', function($scope, lodash, toastr, $location, userProfile, Auth) {
 
   $scope.loginForm = {
     loading: false
@@ -21,7 +21,7 @@ angular.module('myApp.login', ['ngRoute', 'ngLodash'])
   $scope.submitLoginForm = function() {
 
     $scope.loginForm.loading = true;
-    Auth.signIn($scope.loginForm.credentials).then(function() {
+    Auth.signIn($scope.loginForm.credentials).then(function onSuccess() {
       return userProfile.$refresh();
     }).then(function() {
       if (userProfile.$hasRole('ROLE_ADMIN')) {
@@ -29,6 +29,9 @@ angular.module('myApp.login', ['ngRoute', 'ngLodash'])
       } else {
         $location.path('/institutes/'+userProfile.institute.id+'/lists');
       }
+    }).catch(function onError() {
+      $scope.loginForm.loading = false;
+      $scope.loginForm.errors = "Please enter correct email/password";
     });
   }
 

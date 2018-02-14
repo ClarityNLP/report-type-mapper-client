@@ -25,11 +25,11 @@
           Tags
         </a>
         <div class="navbar-item has-dropdown is-hoverable" ng-show="userProfile.$isAuthenticated()">
-          <a class="navbar-link" href="/documentation/overview/start/">
+          <a class="navbar-link" href="/#!/token">
             Settings
           </a>
           <div class="navbar-dropdown ">
-            <a class="navbar-item " href="/documentation/overview/start/">
+            <a class="navbar-item " href="/#!/token">
               API Token
             </a>
             <a class="navbar-item " href="/#!/logout">
@@ -98,6 +98,9 @@
                   Login
                 </button>
               </p>
+            </div>
+            <div class="notification is-danger" ng-show="loginForm.errors">
+              {{loginForm.errors}}
             </div>
           </div>
         </nav>

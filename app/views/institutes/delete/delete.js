@@ -13,7 +13,7 @@ angular.module('myApp.institutes.delete', ['ngRoute', 'ngLodash'])
   });
 }])
 
-.controller('InstitutesDeleteCtrl', ['$scope', 'lodash', '$http', '$routeParams', 'userProfile', 'Services', '$location', function($scope, lodash, $http, $routeParams, userProfile, Services, $location) {
+.controller('InstitutesDeleteCtrl', ['$scope', 'lodash', '$routeParams', 'userProfile', 'Services', '$location', function($scope, lodash, $routeParams, userProfile, Services, $location) {
 
   $scope.userProfile = userProfile;
 

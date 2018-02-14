@@ -12,28 +12,34 @@ angular.module('myApp.register', ['ngRoute', 'ngLodash'])
   });
 }])
 
-.controller('RegisterCtrl', ['$scope', 'lodash', '$http', 'Services', 'Auth', 'userProfile', '$location', function($scope, lodash, $http, Services, Auth, userProfile, $location) {
+.controller('RegisterCtrl', ['$scope', 'lodash', 'Services', 'Auth', 'userProfile', '$location', function($scope, lodash, Services, Auth, userProfile, $location) {
 
   getInstitutes();
+
+  $scope.registerForm = {};
 
   function getInstitutes() {
     Services.getInstitutes().then(function onSuccess(response) {
       $scope.institutes = response.data;
-      console.log('response: ',response);
-    }).catch(function onError(sailsResponse) {
-      console.log('problem getting institutes...');
+      $scope.registerForm.selectedInstitute = response.data[0];
+    }).catch(function onError(response) {
+      console.log('error: ',response);
     }).finally(function eitherWay() {
-
     });
   }
 
   $scope.register = function() {
-
-    Auth.signUp($scope.registerForm).then(function() {
+    Auth.signUp($scope.registerForm).then(function onSuccess(response) {
       return userProfile.$refresh();
     }).then(function() {
       $location.path('/institutes/'+userProfile.institute.id+'/lists');
-    })
+    }).catch(function onError(response) {
+      if (response.status == 400) {
+        $scope.registerForm.errors = "Please enter all required fields";
+      } else {
+        $scope.registerForm.errors = "There was an unexpected problem. Please try again.";
+      }
+    });
 
   }
 

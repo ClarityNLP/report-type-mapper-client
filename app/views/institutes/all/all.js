@@ -13,7 +13,7 @@ angular.module('myApp.institutes.all', ['ngRoute', 'ngLodash'])
   });
 }])
 
-.controller('InstitutesAllCtrl', ['$scope', 'lodash', '$http', '$routeParams', 'userProfile', 'Services', function($scope, lodash, $http, $routeParams, userProfile, Services) {
+.controller('InstitutesAllCtrl', ['$scope', 'lodash', '$routeParams', 'userProfile', 'Services', function($scope, lodash, $routeParams, userProfile, Services) {
 
   $scope.userProfile = userProfile;
 

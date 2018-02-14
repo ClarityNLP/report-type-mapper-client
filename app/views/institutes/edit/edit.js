@@ -13,7 +13,7 @@ angular.module('myApp.institutes.edit', ['ngRoute', 'ngLodash'])
   });
 }])
 
-.controller('InstitutesEditCtrl', ['$scope', 'lodash', '$http', '$routeParams', 'Services', '$location', 'userProfile', function($scope, lodash, $http, $routeParams, Services, $location, userProfile) {
+.controller('InstitutesEditCtrl', ['$scope', 'lodash', '$routeParams', 'Services', '$location', 'userProfile', function($scope, lodash, $routeParams, Services, $location, userProfile) {
 
   $scope.userProfile = userProfile;
 

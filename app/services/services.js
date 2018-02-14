@@ -1,13 +1,17 @@
 angular.module('myApp.services', [])
 
-.service("Services", ["$http", function ($http) {
+.service("Services", ["$http", "config", function ($http, config) {
 
   this.getReportTypes = function(params) {
-    return $http.get('http://localhost:1337/institutes/'+params.instituteId+'/lists/'+params.listId+'/reportTypes?page='+params.reportTypePage+'&query='+params.reportTypeQuery)
+    return $http.get(config.API_URL+'/institutes/'+params.instituteId+'/lists/'+params.listId+'/reportTypes?page='+params.reportTypePage+'&query='+params.reportTypeQuery)
+  }
+
+  this.getToken = function() {
+    return $http.get(config.API_URL+'/getToken');
   }
 
   this.getTags = function(params) {
-    return $http.get('http://localhost:1337/institutes/'+params.instituteId+'/lists/'+params.listId+'/tags?query='+params.tagQuery)
+    return $http.get(config.API_URL+'/institutes/'+params.instituteId+'/lists/'+params.listId+'/tags?query='+params.tagQuery)
   }
 
   this.addTag = function(params) {
@@ -15,7 +19,15 @@ angular.module('myApp.services', [])
       reportTypeId: params.reportTypeId,
       tagId: params.tagId
     };
-    return $http.post('http://localhost:1337/institutes/'+params.instituteId+'/lists/'+params.listId+'/addTag', payload)
+    return $http.post(config.API_URL+'/institutes/'+params.instituteId+'/lists/'+params.listId+'/addTag', payload)
+  }
+
+  this.allSelectedAddTag = function(params) {
+    var payload = {
+      reportTypeQuery: params.reportTypeQuery,
+      tagId: params.tagId
+    };
+    return $http.post(config.API_URL+'/institutes/'+params.instituteId+'/lists/'+params.listId+'/allSelectedAddTag', payload)
   }
 
   this.removeTag = function(params) {
@@ -23,39 +35,47 @@ angular.module('myApp.services', [])
       reportTypeId: params.reportTypeId,
       tagId: params.tagId
     };
-    return $http.post('http://localhost:1337/institutes/'+params.instituteId+'/lists/'+params.listId+'/removeTag', payload)
+    return $http.post(config.API_URL+'/institutes/'+params.instituteId+'/lists/'+params.listId+'/removeTag', payload)
+  }
+
+  this.allSelectedRemoveTag = function(params) {
+    var payload = {
+      reportTypeQuery: params.reportTypeQuery,
+      tagId: params.tagId
+    };
+    return $http.post(config.API_URL+'/institutes/'+params.instituteId+'/lists/'+params.listId+'/allSelectedRemoveTag', payload)
   }
 
   this.createTag = function(name) {
-    return $http.post('http://localhost:1337/tags', { name: name });
+    return $http.post(config.API_URL+'/tags', { name: name });
   }
 
   this.getTagCount = function() {
-    return $http.get('http://localhost:1337/tags/count')
+    return $http.get(config.API_URL+'/tags/count')
   }
 
   this.getInstitutes = function() {
-    return $http.get('http://localhost:1337/institutes')
+    return $http.get(config.API_URL+'/institutes')
   }
 
   this.createInstitute = function(name) {
-    return $http.post('http://localhost:1337/institutes', { name: name });
+    return $http.post(config.API_URL+'/institutes', { name: name });
   }
 
   this.getInstitute = function(instituteId) {
-    return $http.get('http://localhost:1337/institutes/'+instituteId);
+    return $http.get(config.API_URL+'/institutes/'+instituteId);
   }
 
   this.editInstitute = function(params) {
-    return $http.post('http://localhost:1337/institutes/'+params.instituteId, { name: params.name });
+    return $http.post(config.API_URL+'/institutes/'+params.instituteId, { name: params.name });
   }
 
   this.deleteInstitute = function(instituteId) {
-    return $http.delete('http://localhost:1337/institutes/'+instituteId);
+    return $http.delete(config.API_URL+'/institutes/'+instituteId);
   }
 
   this.getInstituteName = function(instituteId) {
-    return $http.get('http://localhost:1337/institutes/'+instituteId+'/name');
+    return $http.get(config.API_URL+'/institutes/'+instituteId+'/name');
   }
 
 }])

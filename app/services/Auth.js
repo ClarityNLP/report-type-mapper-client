@@ -1,23 +1,23 @@
 angular.module('myApp.Auth', [])
 
-.service("Auth", ["$http", function ($http) {
+.service("Auth", ["$http", "config", function ($http, config) {
 
   this.getProfile = function () {
-    return $http.get("http://localhost:1337/me");
+    return $http.get(config.API_URL+"/me");
   };
 
   this.signIn = function(credentials) {
-    return $http.post("http://localhost:1337/login", credentials).then(function (response) {
+    return $http.post(config.API_URL+"/login", credentials).then(function (response) {
       // authentication succeeded, store the response access token somewhere (if any)
     });
   };
 
   this.signUp = function(params) {
-    return $http.post("http://localhost:1337/signup", params);
+    return $http.post(config.API_URL+"/signup", params);
   }
 
   this.logout = function() {
-    return $http.get("http://localhost:1337/logout");
+    return $http.get(config.API_URL+"/logout");
   };
 
 }])

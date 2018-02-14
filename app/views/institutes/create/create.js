@@ -13,7 +13,7 @@ angular.module('myApp.institutes.create', ['ngRoute', 'ngLodash', 'bootstrap.fil
   });
 }])
 
-.controller('InstitutesCreateCtrl', ['$scope', 'lodash', '$http', '$location', '$routeParams', 'userProfile', 'Services', function($scope, lodash, $http, $location, $routeParams, userProfile, Services) {
+.controller('InstitutesCreateCtrl', ['$scope', 'lodash', '$location', '$routeParams', 'userProfile', 'Services', function($scope, lodash, $location, $routeParams, userProfile, Services) {
 
   $scope.userProfile = userProfile;
 

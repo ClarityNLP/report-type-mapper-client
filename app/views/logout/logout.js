@@ -12,7 +12,7 @@ angular.module('myApp.logout', ['ngRoute', 'ngLodash'])
   });
 }])
 
-.controller('LogoutCtrl', ['$scope', 'lodash', '$http', 'toastr', '$location', 'userProfile', 'Auth', function($scope, lodash, $http, toastr, $location, userProfile, Auth) {
+.controller('LogoutCtrl', ['$scope', 'lodash', 'toastr', '$location', 'userProfile', 'Auth', function($scope, lodash, toastr, $location, userProfile, Auth) {
 
   logout();
 
