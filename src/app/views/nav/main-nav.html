@@ -1,0 +1,68 @@
+<!-- NAV -->
+<nav id="navbar" class="navbar is-fixed-top " style="transform: translateY(0px);">
+  <div id="specialShadow" class="bd-special-shadow" style="opacity: 1; transform: scaleY(1);"></div>
+  <div class="container">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="/">
+        <span>Report Type Mapper</span>
+      </a>
+      <div id="navbarBurger" class="navbar-burger burger" data-target="navMenuDocumentation">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </div>
+    <div id="navMenuDocumentation" class="navbar-menu">
+
+      <div class="navbar-end">
+        <a class="navbar-item" href="/#!/users" ng-show="userProfile.$hasRole('ROLE_ADMIN')">
+          Users
+        </a>
+        <a class="navbar-item">
+          <span class="tag is-danger is-medium" ng-show="userProfile.$hasRole('ROLE_ADMIN')">Admin</span>
+        </a>
+        <a class="navbar-item" href="/#!/institutes" ng-show="userProfile.$hasRole('ROLE_ADMIN')">
+          Institutes
+        </a>
+        <a class="navbar-item" href="/#!/tags" ng-show="userProfile.$hasRole('ROLE_ADMIN')">
+          Tags
+        </a>
+        <div class="navbar-item has-dropdown is-hoverable" ng-show="userProfile.$isAuthenticated()">
+          <a class="navbar-link" href="/#!/token">
+            Settings
+          </a>
+          <div class="navbar-dropdown ">
+            <a class="navbar-item " href="/#!/token">
+              API Token
+            </a>
+            <a class="navbar-item " href="/#!/logout">
+              Logout
+            </a>
+          </div>
+        </div>
+        <div class="navbar-item" ng-hide="userProfile.$isAuthenticated()">
+          <div class="field is-grouped">
+            <p class="control">
+              <a class=" is-link is-outlined button" href="#!/register">
+                <span class="icon">
+                  <i class="fa fa-user-plus"></i>
+                </span>
+                <span>
+                  Register
+                </span>
+              </a>
+            </p>
+            <p class="control">
+              <a class="button is-primary" href="#!/login">
+                <span class="icon">
+                  <i class="fa fa-sign-in"></i>
+                </span>
+                <span>Login</span>
+              </a>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav>

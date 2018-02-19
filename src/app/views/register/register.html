@@ -1,0 +1,64 @@
+<section class="section">
+  <div class="container">
+    <div class="columns is-centered">
+      <div class="column is-half">
+        <nav class="panel">
+          <p class="panel-heading">
+            Register
+          </p>
+          <div class="panel-block" style="display:block">
+            <div class="field">
+              <div class="control">
+                <input class="input" type="text" placeholder="First name" ng-model="registerForm.firstName">
+              </div>
+            </div>
+            <div class="field">
+              <div class="control">
+                <input class="input" type="text" placeholder="Last name" ng-model="registerForm.lastName">
+              </div>
+            </div>
+            <div class="field">
+              <div class="control">
+                <div class="select" style="display:block;">
+                  <select style="width:100%;" ng-model="registerForm.selectedInstitute" ng-options="institute.name for institute in institutes track by institute.id">
+                    <!-- <option ng-repeat="institute in institutes" ng-value="{{institute.id}}">{{institute.name}}</option> -->
+
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="field">
+              <p class="control has-icons-left has-icons-right">
+                <input class="input" type="email" placeholder="Email" ng-model="registerForm.email">
+                <span class="icon is-small is-left">
+                  <i class="fa fa-envelope"></i>
+                </span>
+                <span class="icon is-small is-right">
+                  <i class="fa fa-check"></i>
+                </span>
+              </p>
+            </div>
+            <div class="field">
+              <p class="control has-icons-left">
+                <input class="input" type="password" placeholder="Password" ng-model="registerForm.password">
+                <span class="icon is-small is-left">
+                  <i class="fa fa-lock"></i>
+                </span>
+              </p>
+            </div>
+            <div class="field">
+              <p class="control">
+                <button class="button is-link is-large is-outlined is-fullwidth" ng-click="register()">
+                  Register
+                </button>
+              </p>
+            </div>
+            <div class="notification is-danger" ng-show="registerForm.errors">
+              {{registerForm.errors}}
+            </div>
+          </div>
+        </nav>
+      </div>
+    </div>
+  </div>
+</section>

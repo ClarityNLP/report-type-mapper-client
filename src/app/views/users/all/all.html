@@ -1,0 +1,35 @@
+<section class="section">
+  <div class="container">
+    <table class="table table-user">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Roles</th>
+          <th>Institute</th>
+          <th>Activate</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="user in users">
+          <td>{{user.firstName}}&nbsp;{{user.lastName}}</td>
+          <td>{{user.email}}</td>
+          <td><span class="tag is-info role-tag" ng-repeat="role in user.roles track by $index">{{role}}</span></td>
+          <td>{{user.institute.name}}</td>
+          <td>
+            <input
+              type="checkbox"
+              ng-model="user.activated"
+              ng-change="activateUser(user)"
+              ng-disabled="user.roles.indexOf('ROLE_ADMIN') > 0"
+            />
+          </td>
+          <td>
+            <a href="/#!/users/{{user.id}}/delete" class="button is-small is-outlined is-danger" ng-disabled="user.roles.indexOf('ROLE_ADMIN') > 0">Delete</a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
