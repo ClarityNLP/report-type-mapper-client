@@ -2,6 +2,7 @@
 
 var gulp = require('gulp');
 var $ = require('gulp-load-plugins')();
+var babel = require('gulp-babel');
 var path = require('path');
 
 var config = require('./config');
@@ -50,6 +51,9 @@ gulp.task('build-app', ['inject', 'partials'], function() {
     // Inject Angular dependencies.
     pipe($.ngAnnotate()).
     // Obfuscate scripts preserving `some` comments.
+    pipe(babel({
+      presets: ['env']
+    })).
     pipe($.uglify({output: {comments: 'some'}})).
     on('error', config.errorHandler('Uglify')).
     // Store source maps.

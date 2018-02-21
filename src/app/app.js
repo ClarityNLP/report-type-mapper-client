@@ -22,7 +22,8 @@ angular.module('app', [
   'myApp.Auth',
   'myApp.services',
   'myApp.UserProfile',
-  'myApp.nav'
+  'myApp.nav',
+  'angular-inview'
 ])
 .config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider) {
   $stateProvider

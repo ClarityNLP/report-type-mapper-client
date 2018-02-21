@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('myApp.map', ['ngLodash', 'angular-inview'])
+angular.module('myApp.map', ['ngLodash'])
 
 .controller('MapCtrl', ['$scope', 'lodash', '$stateParams', 'userProfile', 'Services', function($scope, lodash, $stateParams, userProfile, Services) {
 

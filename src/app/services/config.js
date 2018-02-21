@@ -1,2 +1,2 @@
 angular.module("myApp.config", [])
-.constant("EnvironmentConfig", {"API_URL":"http://localhost:1337"});
+.constant("EnvironmentConfig", {"API_URL":"http://report-type-mapper.hdap.gatech.edu:1338"});
