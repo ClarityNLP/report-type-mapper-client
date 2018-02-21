@@ -30,8 +30,12 @@
 
 .report_type-panel-block .report_type-info {
   /*border-bottom: 1px solid #dbdbdb;*/
-  margin-bottom: 3px;
-  padding-bottom: 9px;
+  margin-bottom: 10px;
+}
+
+.report_type-panel-block .report_type-info.hide-tags {
+  /*border-bottom: 1px solid #dbdbdb;*/
+  margin-bottom: 0px;
 }
 
 .report_type-panel-block .report_type-info input[type="checkbox"] {

@@ -3,7 +3,7 @@ angular.module('myApp.services', [])
 .service("Services", ["$http", "EnvironmentConfig", function ($http, EnvironmentConfig) {
 
   this.getReportTypes = function(params) {
-    return $http.get(EnvironmentConfig.API_URL+'/institutes/'+params.instituteId+'/lists/'+params.listId+'/reportTypes?page='+params.reportTypePage+'&query='+params.reportTypeQuery)
+    return $http.get(EnvironmentConfig.API_URL+'/institutes/'+params.instituteId+'/lists/'+params.listId+'/reportTypes?page='+params.reportTypePage+'&query='+params.reportTypeQuery+'&untaggedOnly='+params.untaggedOnly)
   }
 
   this.getToken = function() {

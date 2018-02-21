@@ -8,9 +8,9 @@
       </ul>
     </nav>
     <div class="columns">
-      <div class="column">
+      <div class="column report-type-list">
 
-        <nav id="" class="panel">
+        <nav class="panel">
           <p class="panel-heading">
             Report Types <span class="tag is-light">{{numReportTypeResults}}&nbsp;results</span>
           </p>
@@ -24,44 +24,32 @@
           </div>
           <div class="panel-block">
             <input type="checkbox" ng-model="isAllSelected" ng-click="toggleAllReportTypes()">
-            <span>Select All</span>
+            <span class="modifier">Select All</span>
+            <input type="checkbox" ng-model="isUntaggedOnlySelected" ng-click="toggleUntaggedOnly()">
+            <span class="modifier">Untagged Only</span>
+            <input type="checkbox" ng-model="isHideTagsSelected" ng-click="toggleHideTags()">
+            <span class="modifier">Hide Tags</span>
           </div>
-          <!-- <p class="panel-tabs">
-            <a class="is-active">all</a>
-            <a>public</a>
-            <a>private</a>
-            <a>sources</a>
-            <a>forks</a>
-          </p> -->
-          <div id="report-type-list">
+          <div id="report-type-list" in-view-container>
             <div class="panel-block report_type-panel-block" data-id="{{report_type.id}}" ng-repeat="report_type in report_types">
-              <div class="report_type-info">
+              <div class="report_type-info" ng-class="{'hide-tags': isHideTagsSelected}">
                 <input type="checkbox" ng-model="report_type.selected" ng-click="selectReportType(report_type)" ng-change="reportTypeToggled()">
                 <span>{{report_type.name}}</span>
+                <span class="tag is-danger just-tag-count" ng-show="isHideTagsSelected && report_type.tags.length > 0">{{report_type.tags.length}}</span>
               </div>
-              <div class="field is-grouped is-grouped-multiline tag-list">
+              <div class="field is-grouped is-grouped-multiline tag-list" ng-if="!isHideTagsSelected">
                 <div class="control" data-id="{{tag.id}}" ng-repeat="tag in report_type.tags">
-                  <div class="tags has-addons">
+                  <div class="tags has-addons" >
                     <span class="tag">{{tag.documentSubjectMatterDomain}}</span>
                     <span class="tag is-danger cross" ng-click="deleteTag(report_type.id,tag.id)"><i class="fa fa-times"></i></span>
                   </div>
                 </div>
               </div>
             </div>
-            <div class="panel-block load-next-page" ng-show="loadMoreActive">
-              Load More
+            <div class="panel-block report-types-loader-block" in-view="loaderInView($index,$inview,$inviewInfo)" in-view-options="{ generateParts: true }" ng-if="showLoader">
+              <div class="loader-text"><i class="fa fa-circle-o-notch fa-spin"></i>&nbsp;<span>Loading...</span></div>
             </div>
           </div>
-
-          <!-- <label class="panel-block">
-            <input type="checkbox">
-            remember me
-          </label> -->
-          <!-- <div class="panel-block">
-            <button class="button is-link is-outlined is-fullwidth">
-              reset all filters
-            </button>
-          </div> -->
         </nav>
 
       </div>
@@ -79,13 +67,6 @@
               </span>
             </p>
           </div>
-          <!-- <p class="panel-tabs">
-            <a class="is-active">all</a>
-            <a>public</a>
-            <a>private</a>
-            <a>sources</a>
-            <a>forks</a>
-          </p> -->
           <div id="tag-list">
             <div class="panel-block" data-id="{{tag.id}}" ng-repeat="tag in tags">
               <a class="button is-info is-outlined is-small" ng-click="addTag(tag)">Add Tag</a>&nbsp;&nbsp;
@@ -93,16 +74,6 @@
               <span>{{tag.documentSubjectMatterDomain}}</span>
             </div>
           </div>
-
-          <!-- <label class="panel-block">
-            <input type="checkbox">
-            remember me
-          </label> -->
-          <!-- <div class="panel-block">
-            <button class="button is-link is-outlined is-fullwidth">
-              reset all filters
-            </button>
-          </div> -->
         </nav>
 
       </div>

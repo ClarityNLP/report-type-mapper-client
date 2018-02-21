@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('myApp.map', ['ngLodash'])
+angular.module('myApp.map', ['ngLodash', 'angular-inview'])
 
 .controller('MapCtrl', ['$scope', 'lodash', '$stateParams', 'userProfile', 'Services', function($scope, lodash, $stateParams, userProfile, Services) {
 
@@ -8,45 +8,9 @@ angular.module('myApp.map', ['ngLodash'])
 
   $scope.reportTypePage = 0;
 
-  $scope.loadMoreActive = false;
+  $scope.showLoader = false;
 
-  // $scope.loadMoreVisible = false;
-
-  var loadMoreElement = angular.element(document.querySelector('.load-next-page'));
-
-  angular.element(document.querySelector('#report-type-list')).bind('scroll', function(){
-    var loadMore = isScrolledIntoView(loadMoreElement);
-    console.log('loadMore: ',loadMore);
-    if (loadMore && $scope.loadMoreActive) {
-      $scope.loadMoreActive = false;
-      $scope.reportTypePage = $scope.reportTypePage + 1;
-
-      var params = {
-        instituteId: $stateParams.instituteId,
-        listId: $stateParams.listId,
-        reportTypePage: $scope.reportTypePage,
-        reportTypeQuery: $scope.reportTypeQuery ? $scope.reportTypeQuery : ''
-      }
-
-      console.log('params: ',params);
-
-      Services.getReportTypes(params).then(function onSuccess(response) {
-        _.forEach(response.data.reportTypes, function(value) {
-          $scope.report_types.push(Object.assign({},value, {selected: $scope.isAllSelected}));
-        });
-
-        if (response.data.reportTypes.length == 30) {
-          $scope.loadMoreActive = true;
-        } else {
-          $scope.loadMoreActive = false;
-        }
-      }).catch(function onError(sailsResponse) {
-        console.log('error');
-      }).finally(function eitherWay() {
-        console.log('either way...');
-      });
-    }
-  });
+  $scope.isUntaggedOnlySelected = false;
 
   getReportTypes();
   getTags();
@@ -57,7 +21,8 @@ angular.module('myApp.map', ['ngLodash'])
       instituteId: $stateParams.instituteId,
       listId: $stateParams.listId,
       reportTypePage: $scope.reportTypePage,
-      reportTypeQuery: ''
+      reportTypeQuery: '',
+      untaggedOnly: $scope.isUntaggedOnlySelected ? $scope.isUntaggedOnlySelected : ''
     }
 
     Services.getReportTypes(params).then(function onSuccess(response) {
@@ -65,9 +30,9 @@ angular.module('myApp.map', ['ngLodash'])
       console.log('response: ',response);
       $scope.report_types = response.data.reportTypes;
       if (response.data.reportTypes.length == 30) {
-        $scope.loadMoreActive = true;
+        $scope.showLoader = true;
       } else {
-        $scope.loadMoreActive = false;
+        $scope.showLoader = false;
       }
     }).catch(function onError(sailsResponse) {
       console.log('error');
@@ -81,7 +46,6 @@ angular.module('myApp.map', ['ngLodash'])
     var params = {
       instituteId: $stateParams.instituteId,
       listId: $stateParams.listId,
-      // tagPage: $scope.tagPage,
       tagQuery: ''
     }
 
@@ -95,20 +59,9 @@ angular.module('myApp.map', ['ngLodash'])
     });
   }
 
-  function isScrolledIntoView(el) {
-      var el = el[0];
-      var elemTop = el.getBoundingClientRect().top;
-      var elemBottom = el.getBoundingClientRect().bottom;
-
-      // Only completely visible elements return true:
-      var isVisible = (elemTop >= 0) && (elemBottom <= window.innerHeight + 5); //fix the plus 5
-      // Partially visible elements return true:
-      isVisible = elemTop < window.innerHeight && elemBottom >= 0;
-      return isVisible;
-  }
-
   $scope.searchReportType = function(e) {
     $scope.isAllSelected = false;
+    $scope.isUntaggedOnlySelected = false;
 
     $scope.reportTypePage = 0;
 
@@ -116,16 +69,17 @@ angular.module('myApp.map', ['ngLodash'])
       instituteId: $stateParams.instituteId,
       listId: $stateParams.listId,
       reportTypePage: $scope.reportTypePage,
-      reportTypeQuery: $scope.reportTypeQuery
+      reportTypeQuery: $scope.reportTypeQuery,
+      untaggedOnly: $scope.isUntaggedOnlySelected ? $scope.isUntaggedOnlySelected : ''
     }
 
     Services.getReportTypes(params).then(function onSuccess(response) {
       $scope.numReportTypeResults = response.data.numResults;
       $scope.report_types = response.data.reportTypes;
       if (response.data.reportTypes.length == 30) {
-        $scope.loadMoreActive = true;
+        $scope.showLoader = true;
       } else {
-        $scope.loadMoreActive = false;
+        $scope.showLoader = false;
       }
     }).catch(function onError(sailsResponse) {
       console.log('error');
@@ -136,13 +90,10 @@ angular.module('myApp.map', ['ngLodash'])
   }
 
   $scope.searchTag = function(e) {
-    // $scope.reportTypePage = 0;
-    console.log('search tag...');
 
     var params = {
       instituteId: $stateParams.instituteId,
       listId: $stateParams.listId,
-      // reportTypePage: $scope.reportTypePage,
       tagQuery: $scope.tagQuery
     }
 
@@ -179,7 +130,6 @@ angular.module('myApp.map', ['ngLodash'])
         }
       });
     } else {
-      console.log('running select all tag assignment...');
       _.forEach($scope.report_types, function(report_type) {
         var hasTag = _.some(report_type.tags, {'id': tag.id});
         if (report_type.selected && !hasTag) {
@@ -224,7 +174,6 @@ angular.module('myApp.map', ['ngLodash'])
         }
       });
     } else {
-      console.log('running select all tag removal assignment...');
       _.forEach($scope.report_types, function(report_type) {
         var hasTag = _.some(report_type.tags, {'id': tag.id});
         if (report_type.selected && hasTag) {
@@ -292,10 +241,6 @@ angular.module('myApp.map', ['ngLodash'])
     });
   }
 
-  //select all
-
-  // $scope.isAllSelected = false;
-
   $scope.toggleAllReportTypes = function() {
     var toggleStatus = $scope.isAllSelected;
     angular.forEach($scope.report_types, function(itm){ itm.selected = toggleStatus; });
@@ -303,6 +248,70 @@ angular.module('myApp.map', ['ngLodash'])
 
   $scope.reportTypeToggled = function(){
     $scope.isAllSelected = $scope.report_types.every(function(itm){ return itm.selected; })
+  }
+
+  $scope.toggleHideTags = function() {
+    console.log('hiding tags...');
+  }
+
+  $scope.toggleUntaggedOnly = function() {
+    $scope.isAllSelected = false;
+    $scope.reportTypePage = 0;
+
+    var params = {
+      instituteId: $stateParams.instituteId,
+      listId: $stateParams.listId,
+      reportTypePage: $scope.reportTypePage,
+      reportTypeQuery: $scope.reportTypeQuery ? $scope.reportTypeQuery : '',
+      untaggedOnly: $scope.isUntaggedOnlySelected ? $scope.isUntaggedOnlySelected : ''
+    }
+
+    Services.getReportTypes(params).then(function onSuccess(response) {
+      $scope.numReportTypeResults = response.data.numResults;
+      $scope.report_types = response.data.reportTypes;
+      console.log('response: ',response);
+      if (response.data.reportTypes.length > 0) {
+        $scope.showLoader = true;
+      } else {
+        $scope.showLoader = false;
+      }
+    }).catch(function onError(sailsResponse) {
+      console.log('error');
+    }).finally(function eitherWay() {
+      console.log('either way...');
+    });
+  }
+
+  $scope.loaderInView = function(index,inview,inviewInfo) {
+    var parts = inviewInfo.parts;
+    if (parts && parts.bottom && parts.left && parts.right && parts.top) {
+
+        $scope.reportTypePage = $scope.reportTypePage + 1;
+
+        var params = {
+          instituteId: $stateParams.instituteId,
+          listId: $stateParams.listId,
+          reportTypePage: $scope.reportTypePage,
+          reportTypeQuery: $scope.reportTypeQuery ? $scope.reportTypeQuery : '',
+          untaggedOnly: $scope.isUntaggedOnlySelected ? $scope.isUntaggedOnlySelected : ''
+        }
+
+        Services.getReportTypes(params).then(function onSuccess(response) {
+          _.forEach(response.data.reportTypes, function(value) {
+            $scope.report_types.push(Object.assign({},value, {selected: $scope.isAllSelected}));
+          });
+
+          if (response.data.reportTypes.length == 30) {
+            $scope.showLoader = true;
+          } else {
+            $scope.showLoader = false;
+          }
+        }).catch(function onError(sailsResponse) {
+          console.log('error');
+        }).finally(function eitherWay() {
+          console.log('either way...');
+        });
+    }
   }
 
 
