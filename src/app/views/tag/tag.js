@@ -2,7 +2,7 @@
 
 angular.module('myApp.tag', [])
 
-.controller('TagCtrl', ['$scope', '$http', 'userProfile', 'Services', 'EnvironmentConfig', function($scope, $http, userProfile, Services, EnvironmentConfig) {
+.controller('TagCtrl', ['$scope', '$http', 'userProfile', 'Services', 'EnvironmentConfig', 'toastr', function($scope, $http, userProfile, Services, EnvironmentConfig, toastr) {
 
   $scope.userProfile = userProfile;
 
@@ -10,7 +10,10 @@ angular.module('myApp.tag', [])
 
   $scope.fileFormat = 'simple';
 
+  $scope.isProcessing = false;
+
   $scope.createTags = function() {
+    $scope.isProcessing = true;
     var fd = new FormData();
     fd.append('tagFile', $scope.tagFile);
     fd.append('fileFormat', $scope.fileFormat);
@@ -19,10 +22,13 @@ angular.module('myApp.tag', [])
       transformRequest: angular.identity,
       headers: {'Content-Type': undefined}
     }).then(function(response) {
-      console.log('upload success...');
-      console.log('response: ',response);
-      // $location.path('/institutes/'+userProfile.institute.id+'/lists');
-    })
+      toastr.success(response.data.numCreatedGlobalTags+' Global Tags created.');
+      getTagCount();
+    }).catch(function onError(response) {
+      toastr.error(response.data.message);
+    }).finally(function eitherWay() {
+      $scope.isProcessing = false;
+    });
   }
 
   $scope.createTag = function() {
