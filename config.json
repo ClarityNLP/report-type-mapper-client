@@ -6,7 +6,7 @@
   },
   "production": {
     "EnvironmentConfig": {
-      "API_URL": "http://localhost:1338"
+      "API_URL": "http://report-type-mapper.hdap.gatech.edu:1338"
     }
   }
 }

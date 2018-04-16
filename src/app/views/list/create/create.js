@@ -1,12 +1,49 @@
 'use strict';
 
-angular.module('myApp.list.create', ['bootstrap.fileField'])
+angular.module('myApp.list.create', [])
 
-.controller('ListCreateCtrl', ['$scope', '$http', '$state', '$stateParams', 'userProfile', 'Services', 'EnvironmentConfig', function($scope, $http, $state, $stateParams, userProfile, Services, EnvironmentConfig) {
+.controller('ListCreateCtrl', ['$scope', '$http', '$state', '$stateParams', 'userProfile', 'Services', 'EnvironmentConfig', 'toastr', function($scope, $http, $state, $stateParams, userProfile, Services, EnvironmentConfig, toastr) {
 
   $scope.userProfile = userProfile;
 
   $scope.instituteId = $stateParams.instituteId;
+
+  $scope.isProcessing = false;
+
+  $scope.createList = function() {
+    $scope.isProcessing = true;
+    var fd = new FormData();
+    fd.append('name', $scope.list.name);
+    fd.append('reportTypes', $scope.list.reportTypes);
+
+    $http.post(EnvironmentConfig.API_URL+"/institutes/"+$stateParams.instituteId+"/lists", fd, {
+      transformRequest: angular.identity,
+      headers: {'Content-Type': undefined}
+    }).then(function(response) {
+      // toastr.success(response.data.numCreatedGlobalTags+' Global Tags created.');
+      // getTagCount();
+      $state.go('app.list.all', { instituteId: $stateParams.instituteId });
+    }).catch(function onError(response) {
+      toastr.error(response.data.message);
+    }).finally(function eitherWay() {
+      $scope.isProcessing = false;
+    });
+  }
+
+  // $scope.createList = function() {
+  //
+  //   var fd = new FormData();
+  //   fd.append('name', $scope.list.name);
+  //   fd.append('reportTypes', $scope.list.reportTypes);
+  //
+  //   $http.post(EnvironmentConfig.API_URL+"/institutes/"+$stateParams.instituteId+"/lists", fd, {
+  //     transformRequest: angular.identity,
+  //     headers: {'Content-Type': undefined}
+  //   }).then(function(response) {
+  //     $state.go('app.list.all', { instituteId: $stateParams.instituteId });
+  //     // $location.path('/institutes/'+$stateParams.instituteId+'/lists');
+  //   })
+  // }
 
   getInstituteName();
 
@@ -20,38 +57,4 @@ angular.module('myApp.list.create', ['bootstrap.fileField'])
     });
   }
 
-  $scope.createList = function() {
-
-    var fd = new FormData();
-    fd.append('name', $scope.list.name);
-    fd.append('reportTypes', $scope.list.reportTypes);
-
-    $http.post(EnvironmentConfig.API_URL+"/institutes/"+$stateParams.instituteId+"/lists", fd, {
-      transformRequest: angular.identity,
-      headers: {'Content-Type': undefined}
-    }).then(function(response) {
-      $state.go('app.list.all', { instituteId: $stateParams.instituteId });
-      // $location.path('/institutes/'+$stateParams.instituteId+'/lists');
-    })
-  }
-
 }])
-
-.directive("fileread", [function () {
-    return {
-        scope: {
-            fileread: "="
-        },
-        link: function (scope, element, attributes) {
-            element.bind("change", function (changeEvent) {
-                var reader = new FileReader();
-                reader.onload = function (loadEvent) {
-                    scope.$apply(function () {
-                        scope.fileread = loadEvent.target.result;
-                    });
-                }
-                reader.readAsDataURL(changeEvent.target.files[0]);
-            });
-        }
-    }
-}]);
