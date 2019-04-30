@@ -1,7 +1,7 @@
 {
   "name": "report-type-mapper",
   "private": true,
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "Report Type Mapper",
   "repository": "https://github.gatech.edu/HDAP/report-type-mapper-client.git",
   "license": "MIT",
